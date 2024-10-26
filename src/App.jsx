@@ -1,7 +1,11 @@
+import Header from "./components/ui/Header";
+
 function App() {
   return (
     <>
-      <div></div>
+      <div className="font-sans">
+        <Header />
+      </div>
     </>
   );
 }
