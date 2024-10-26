@@ -8,6 +8,7 @@ import Login from "./components/pages/Login";
 const routes = createBrowserRouter([
   { path: "/", element: <SignUp /> },
   { path: "/login", element: <Login /> },
+  { path: "/home", element: <Home /> },
 ]);
 
 function App() {
