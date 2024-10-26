@@ -1,11 +1,16 @@
-import Header from "./components/ui/Header";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import Home from "./components/pages/Home";
+
+const routes = createBrowserRouter([{ path: "/", element: <Home /> }]);
 
 function App() {
   return (
     <>
-      <div className="font-sans">
-        <Header />
-      </div>
+      <RouterProvider router={routes}>
+        <div>
+          <Outlet />
+        </div>
+      </RouterProvider>
     </>
   );
 }

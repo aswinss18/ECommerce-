@@ -1,5 +1,12 @@
 import React from "react";
+import Header from "../ui/Header";
+import Discount from "../ui/Discount";
 
 export default function Home() {
-  return <div>Home page</div>;
+  return (
+    <div>
+      <Header />
+      <Discount />
+    </div>
+  );
 }
