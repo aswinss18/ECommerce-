@@ -1,10 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ListItem from "../ui/ListItem";
-const data = ["shoe", "cap", "Pant", "shirt", "football", "cricket bat"];
+import { itemsArray } from "../../../Database";
 
 const pages = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Home() {
+  const [items, setItems] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
+
+  useEffect(() => {
+    setItems(itemsArray);
+  }, []);
+
+  const handlePagePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 1);
+    } else {
+      setCurrentPage(Math.ceil(items.length / itemsPerPage));
+    }
+  };
+  const handlePageDoublePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prevPage) => prevPage - 2);
+    } else {
+      setCurrentPage(Math.ceil(items.length / itemsPerPage));
+    }
+  };
+  const handlePageNext = () => {
+    if (currentPage < Math.ceil(items.length / itemsPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 1);
+    } else {
+      setCurrentPage(1);
+    }
+  };
+  const handlePageDoubleNext = () => {
+    if (currentPage < Math.ceil(items.length / itemsPerPage)) {
+      setCurrentPage((prevPage) => prevPage + 2);
+    } else {
+      setCurrentPage(1);
+    }
+  };
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
+
   return (
     <div className="flex justify-center  mt-10">
       <div className="h-[658px] w-[576px] border-[1px] border-customBorderGray rounded-[20px] flex flex-col items-center justify-around">
@@ -17,21 +58,21 @@ export default function Home() {
         <div className="h-[50%] w-[90%]  px-8 flex flex-col justify-center space-y-4">
           <h2 className="text-xl font-medium">My saved interests!</h2>
           <div className="flex flex-col space-y-6 py-6">
-            {data.map((item, i) => (
-              <ListItem item={item} key={i} />
+            {currentItems.map((item, i) => (
+              <ListItem item={item.item} key={i} />
             ))}
           </div>
         </div>
-        <div className="flex space-x-2 text-customBorderGray">
-          <span>{"<<"}</span>
-          <span>{"<"}</span>
+        <div className="flex space-x-2 text-customBorderGray cursor-pointer">
+          <span onClick={handlePageDoublePrev}>{"<<"}</span>
+          <span onClick={handlePagePrev}>{"<"}</span>
 
           {pages.map((item, i) => (
             <span key={i}>{item}</span>
           ))}
 
-          <span>{">"}</span>
-          <span>{">>"}</span>
+          <span onClick={handlePageNext}>{">"}</span>
+          <span onClick={handlePageDoubleNext}>{">>"}</span>
         </div>
       </div>
     </div>
