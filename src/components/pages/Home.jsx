@@ -8,6 +8,17 @@ export default function Home() {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 6;
+  const pageArray = [
+    currentPage - 4,
+    currentPage - 3,
+    currentPage - 2,
+    currentPage - 1,
+    currentPage,
+    currentPage + 1,
+    currentPage + 2,
+    currentPage + 3,
+    currentPage + 4,
+  ];
 
   useEffect(() => {
     setItems(itemsArray);
@@ -67,9 +78,19 @@ export default function Home() {
           <span onClick={handlePageDoublePrev}>{"<<"}</span>
           <span onClick={handlePagePrev}>{"<"}</span>
 
-          {pages.map((item, i) => (
-            <span key={i}>{item}</span>
-          ))}
+          {pageArray.map((item, i) => {
+            const middleIndex = Math.floor(pageArray.length / 2);
+            return (
+              <span
+                key={i}
+                className={
+                  i === middleIndex ? "font-bold text-gray-500" : "font-normal"
+                }
+              >
+                {item}
+              </span>
+            );
+          })}
 
           <span onClick={handlePageNext}>{">"}</span>
           <span onClick={handlePageDoubleNext}>{">>"}</span>
